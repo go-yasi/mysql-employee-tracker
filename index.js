@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
     database:'employee_DB', 
 }); 
 
-const employeeOpt = () => {
+const start = () => {
     inquirer
     .prompt({
         name: 'listoption',
@@ -20,13 +20,13 @@ const employeeOpt = () => {
     .then((answer) => {
         switch (answer.listoption){
             case 'Add department':
-                return addDept();
+                return addDeparment();
             case 'Add role':
                 return addRole();
             case 'Add employee':
                 return addEmp();
             case 'View Departments':
-                return viewDep();
+                return viewDepartment();
             case 'View Roles':
                 return viewRoles();
             case 'View Employees':
@@ -37,7 +37,7 @@ const employeeOpt = () => {
     })
 };
 
-const addDept = () => {
+const addDeparment = () => {
     inquirer
     .prompt({
         name: 'newDept',
@@ -53,7 +53,7 @@ const addDept = () => {
         (err) => {
             if (err) throw err;
             console.log('Your department was created successfully!');
-            employeeOpt(); 
+            start(); 
         }
         );
     })
@@ -89,7 +89,7 @@ const addRole = () =>{
             (err) => {
                 if (err) throw err;
                 console.log('Your auction was created successfully!');
-                employeeOpt();
+                start();
             }
             );
     });
@@ -132,7 +132,7 @@ const addEmp = () => {
             (err) => {
                 if (err) throw err;
                 console.log('Employee added successfully!');
-                employeeOpt();
+                start();
             }
         );
     });
@@ -146,12 +146,26 @@ const viewDepartment = () => {
       // Log all results of the SELECT statement
       console.log(res);
     });
-  };
+};
 
+const viewRoles = () => {
+    console.log('Pulling up roles...\n');
+    connection.query('SELECT * FROM roles', (err, res) => {
+        if (err) throw err;
+        console.log(res);
+    });
+};
 
-employeeOpt();
+const viewEmployees = () => {
+    console.log('Pulling up employees...\n');
+    connection.query('SELECT * FROM employees', (err, res) => {
+        if (err) throw err;
+        console.log(res);
+    });
+};
+
+start();
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log(`Now listening`);
   });
