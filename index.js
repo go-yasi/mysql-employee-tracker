@@ -15,15 +15,16 @@ const start = () => {
     .prompt({
         name: 'listoption',
         type: 'list',
-        choices: [ 'Add department', 'Add role', 'Add employee', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Role' ]
+        message: 'Hello! What would you like to do today?',
+        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Role' ]
     }) 
     .then((answer) => {
         switch (answer.listoption){
-            case 'Add department':
+            case 'Add Department':
                 return addDeparment();
-            case 'Add role':
+            case 'Add Role':
                 return addRole();
-            case 'Add employee':
+            case 'Add Employee':
                 return addEmployee();
             case 'View Departments':
                 return viewDepartment();
@@ -32,7 +33,7 @@ const start = () => {
             case 'View Employees':
                 return viewEmployees();
             case 'Update Employee Role':
-                return changeErole();
+                return updateRole();
         }
     })
 };
@@ -100,29 +101,29 @@ const addEmployee = () => {
     inquirer
     .prompt([
         {
-        name: 'firstname',
-        type: 'input',
-        message: 'Enter employee first name',
+            name: 'firstname',
+            type: 'input',
+            message: 'Enter employee first name',
         },
         {
-        name: 'lastname',
-        type: 'input',
-        message: 'Enter employee last name',
+            name: 'lastname',
+            type: 'input',
+            message: 'Enter employee last name',
         },
         {
-        name: 'role',//
-        type: 'input',
-        message: 'roleid',//
+            name: 'role',
+            type: 'input',
+            message: 'roleid',
         },
         {
-        name: 'manid',
-        type: 'input',
-        message: 'managerid',//
+            name: 'manid',
+            type: 'input',
+            message: 'managerid',
         }
     ])
     .then((answer) => {
         connection.query(
-            'INSERT INTO employees SET ?', //
+            'INSERT INTO employees SET ?', 
             {
                 first_name: answer.firstname,
                 last_name: answer.lastname,
