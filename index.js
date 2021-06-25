@@ -47,9 +47,9 @@ const addDept = () => {
     })
     .then((answer) => {
         connection.query(
-            'INSERT INTO department SET ?',
+            'INSERT INTO departments SET ?',
         {
-            department_name: answer.item,//what the user typed in
+            department_name: answer.newDept,//what the user typed in
         },
         (err) => {
             if (err) throw err;
@@ -64,14 +64,19 @@ const addRole = () =>{
     inquirer
     .prompt([
         {
-        name: 'newRole',
-        type: 'input',
-        message: 'Enter new role title',
+            name: 'newRole',
+            type: 'input',
+            message: 'Enter new role title',
         },
         {
-        name: 'salary',
-        type: 'input',
-        message: 'Enter Salary',
+            name: 'salary',
+            type: 'input',
+            message: 'Enter Salary',
+        },
+        {
+            name: 'dptId',
+            type: 'input',
+            message: 'Enter Department ID',
         }
     ])
     .then((answer) => {
@@ -80,6 +85,7 @@ const addRole = () =>{
             {
             title: answer.newRole,
             salary: answer.salary,
+            department_id: answer.dptId,
             },
             (err) => {
                 if (err) throw err;
@@ -89,6 +95,7 @@ const addRole = () =>{
             );
     });
 };
+
 
 
 
