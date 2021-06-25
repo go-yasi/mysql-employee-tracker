@@ -24,13 +24,13 @@ const start = () => {
             case 'Add role':
                 return addRole();
             case 'Add employee':
-                return addEmp();
+                return addEmployee();
             case 'View Departments':
                 return viewDepartment();
             case 'View Roles':
                 return viewRoles();
             case 'View Employees':
-                return viewEmp();
+                return viewEmployees();
             case 'Update Employee Role':
                 return changeErole();
         }
@@ -48,7 +48,7 @@ const addDeparment = () => {
         connection.query(
             'INSERT INTO departments SET ?',
         {
-            department_name: answer.newDept,
+            dept_name: answer.newDept,
         },
         (err) => {
             if (err) throw err;
@@ -88,7 +88,7 @@ const addRole = () =>{
             },
             (err) => {
                 if (err) throw err;
-                console.log('Your auction was created successfully!');
+                console.log('Congratualtions! You have successfilly created a new role.');
                 start();
             }
             );
@@ -96,7 +96,7 @@ const addRole = () =>{
 };
 
 
-const addEmp = () => {
+const addEmployee = () => {
     inquirer
     .prompt([
         {
@@ -145,6 +145,7 @@ const viewDepartment = () => {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.log(res);
+      start();
     });
 };
 
@@ -153,6 +154,7 @@ const viewRoles = () => {
     connection.query('SELECT * FROM roles', (err, res) => {
         if (err) throw err;
         console.log(res);
+        start();
     });
 };
 
@@ -161,6 +163,7 @@ const viewEmployees = () => {
     connection.query('SELECT * FROM employees', (err, res) => {
         if (err) throw err;
         console.log(res);
+        start();
     });
 };
 
