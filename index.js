@@ -97,7 +97,47 @@ const addRole = () =>{
 };
 
 
-
+const addEmp = () => {
+    inquirer
+    .prompt([
+        {
+        name: 'firstname',
+        type: 'input',
+        message: 'Enter employee first name',
+        },
+        {
+        name: 'lastname',
+        type: 'input',
+        message: 'Enter employee last name',
+        },
+        {
+        name: 'role',//
+        type: 'input',
+        message: 'roleid',//
+        },
+        {
+        name: 'manid',
+        type: 'input',
+        message: 'managerid',//
+        }
+    ])
+    .then((answer) => {
+        connection.query(
+            'INSERT INTO employees SET ?', //
+            {
+                first_name: answer.firstname,
+                last_name: answer.lastname,
+                role_id: answer.role,
+                manager_id: answer.manid,
+            },
+            (err) => {
+                if (err) throw err;
+                console.log('Employee added successfully!');
+                employeeOpt();
+            }
+        );
+    });
+}
 
 
 
