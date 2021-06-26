@@ -21,13 +21,13 @@ const start = () => {
     .then((answer) => {
         switch (answer.listoption){
             case 'Add Department':
-                return addDeparment();
+                return addDepartment();
             case 'Add Role':
                 return addRole();
             case 'Add Employee':
                 return addEmployee();
             case 'View Departments':
-                return viewDepartment();
+                return viewDepartments();
             case 'View Roles':
                 return viewRoles();
             case 'View Employees':
@@ -38,7 +38,7 @@ const start = () => {
     })
 };
 
-const addDeparment = () => {
+const addDepartment = () => {
     inquirer
     .prompt({
         name: 'newDept',
@@ -140,7 +140,7 @@ const addEmployee = () => {
 }
 
 
-const viewDepartment = () => {
+const viewDepartments = () => {
     console.log('Pulling up department info...\n');
     connection.query('SELECT * FROM departments', (err, res) => {
       if (err) throw err;
