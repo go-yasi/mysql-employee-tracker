@@ -15,8 +15,8 @@ const start = () => {
     .prompt({
         name: 'listoption',
         type: 'list',
-        message: 'Hello! What would you like to do today?',
-        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Role' ]
+        message: 'Hello! What would you like to do?',
+        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View All Departments', 'View All Roles', 'View All Employees', 'Update Employee Role' ]
     }) 
     .then((answer) => {
         switch (answer.listoption){
@@ -26,11 +26,11 @@ const start = () => {
                 return addRole();
             case 'Add Employee':
                 return addEmployee();
-            case 'View Departments':
+            case 'View All Departments':
                 return viewDepartments();
-            case 'View Roles':
+            case 'View All Roles':
                 return viewRoles();
-            case 'View Employees':
+            case 'View All Employees':
                 return viewEmployees();
             case 'Update Employee Role':
                 return updateRole();
@@ -89,7 +89,7 @@ const addRole = () =>{
             },
             (err) => {
                 if (err) throw err;
-                console.log('Congratualtions! You have successfilly created a new role.');
+                console.log('Congratualtions! You have successfully created a new role.');
                 start();
             }
             );
@@ -103,22 +103,22 @@ const addEmployee = () => {
         {
             name: 'firstname',
             type: 'input',
-            message: 'Enter employee first name',
+            message: "What is the employee's first name?",
         },
         {
             name: 'lastname',
             type: 'input',
-            message: 'Enter employee last name',
+            message: "What is the employee's last name?",
         },
         {
             name: 'role',
             type: 'input',
-            message: 'roleid',
+            message: "What is the employee's role ID?",
         },
         {
-            name: 'manid',
+            name: 'managerId',
             type: 'input',
-            message: 'managerid',
+            message: "What is the employee's manager's ID?",
         }
     ])
     .then((answer) => {
@@ -128,11 +128,11 @@ const addEmployee = () => {
                 first_name: answer.firstname,
                 last_name: answer.lastname,
                 role_id: answer.role,
-                manager_id: answer.manid,
+                manager_id: answer.managerId,
             },
             (err) => {
                 if (err) throw err;
-                console.log('Employee added successfully!');
+                console.log('Congratualtions! You have successfully created a new employee.');
                 start();
             }
         );
@@ -144,7 +144,6 @@ const viewDepartments = () => {
     console.log('Pulling up department info...\n');
     connection.query('SELECT * FROM departments', (err, res) => {
       if (err) throw err;
-      // Log all results of the SELECT statement
       console.log(res);
       start();
     });
