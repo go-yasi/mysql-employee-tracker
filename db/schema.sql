@@ -9,8 +9,6 @@ CREATE TABLE departments (
     PRIMARY KEY (id)
 );
 
-SELECT * FROM departments;
-
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
@@ -18,8 +16,6 @@ CREATE TABLE roles (
     department_id INT NOT NULL,
     PRIMARY KEY (id)
 );
-
-SELECT * FROM roles;
 
 CREATE TABLE employees (
     id INT NOT NULL AUTO_INCREMENT,
@@ -30,4 +26,6 @@ CREATE TABLE employees (
     PRIMARY KEY (id)
 );
 
+SELECT * FROM departments;
+SELECT * FROM roles;
 SELECT * FROM employees;

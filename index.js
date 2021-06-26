@@ -24,7 +24,7 @@ const start = () => {
         name: 'listoption',
         type: 'list',
         message: 'Hello! What would you like to do?',
-        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View All Departments', 'View All Roles', 'View All Employees', 'Update Employee Role' ]
+        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View All Departments', 'View All Roles', 'View All Employees', 'Update Employee Role', 'Exit' ]
     }) 
     .then((answer) => {
         switch (answer.listoption){
@@ -42,6 +42,8 @@ const start = () => {
                 return viewEmployees();
             case 'Update Employee Role':
                 return updateRole();
+            case 'Exit':
+                connection.end();
         }
     })
 };
@@ -61,9 +63,9 @@ const addDepartment = () => {
         },
         (err) => {
             if (err) throw err;
-            console.log('----------------------------------------------------------------');
-            console.log('Congratualtions! You have successfully created a new department.');
-            console.log('----------------------------------------------------------------');
+            console.log('----------------------------------------------------------------------------------');
+            console.log(`Congratualtions! You have successfully created the "${answer.newDept}" department.`);
+            console.log('----------------------------------------------------------------------------------');
             start(); 
         }
         );
@@ -74,37 +76,36 @@ const addRole = () =>{
     inquirer
     .prompt([
         {
-            name: 'newRole',
+            name: 'title',
             type: 'input',
-            message: 'Enter new role title',
+            message: 'Please enter the new role title:',
         },
         {
             name: 'salary',
             type: 'input',
-            message: 'Enter Salary',
+            message: 'Please enter the salary for this role:',
         },
         {
-            name: 'dptId',
+            name: 'deptId',
             type: 'input',
-            message: 'Enter Department ID',
+            message: 'Please enter the Department ID for this role:',
         }
     ])
     .then((answer) => {
         connection.query(
             'INSERT INTO roles SET ?',//
             {
-            title: answer.newRole,
-            salary: answer.salary,
-            department_id: answer.dptId,
+                title: answer.title,
+                salary: answer.salary,
+                department_id: answer.deptId,
             },
             (err) => {
                 if (err) throw err;
-                console.log('----------------------------------------------------------');
-                console.log('Congratualtions! You have successfully created a new role.');
-                console.log('----------------------------------------------------------');
+                console.log('--------------------------------------------------------------------------');
+                console.log(`Congratualtions! You have successfully created the "${answer.title}" role.`);
+                console.log('--------------------------------------------------------------------------');
                 start();
-            }
-            );
+            });
     });
 };
 
