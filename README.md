@@ -15,7 +15,7 @@ With my database connected and server effectively spinning up, I began creating 
 
 ## Usage
 [Here](https://github.com/go-yasi/mysql-employee-tracker) is a link to the GitHub repository containing my application code.  
-[Here](https://www.loom.com) is a link to a video walkthrough demonstrating the functionality of my code.
+[Here](https://www.loom.com/share/4a49ce9519c04069ae8dac91da4cbf0c) is a link to a video walkthrough demonstrating the functionality of my code.
 
 ## Conclusion
 I enjoyed developing this application and feel that it really helped solidify my understanding of how there are many ways to interact with information stored in a database. Although I didn't quite get the "bonus" functions working, I do plan to return to this assignment later to try and add them to the application! 
