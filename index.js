@@ -159,7 +159,9 @@ const viewDepartments = () => {
     console.log('Pulling up department info...\n');
     connection.query('SELECT * FROM departments', (err, res) => {
       if (err) throw err;
-      console.log(res);
+      
+      const table = cTable.getTable(res);
+      console.log(table);
       start();
     });
 };
