@@ -2,7 +2,9 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const cTable = require('console.table');
+const { restoreDefaultPrompts } = require('inquirer');
 
+// connection
 const connection = mysql.createConnection({
     host: 'localhost',
     port:3306,
@@ -10,8 +12,6 @@ const connection = mysql.createConnection({
     password:'password',
     database:'employee_DB', 
 }); 
-
-
 
 connection.connect((err) => {
     if (err) throw err;
@@ -53,7 +53,7 @@ const addDepartment = () => {
     .prompt({
         name: 'newDept',
         type: 'input',
-        message: 'Enter new department name',
+        message: "Okay, let's add a new department! \nPlease enter the new department name:",
     })
     .then((answer) => {
         connection.query(
@@ -78,7 +78,7 @@ const addRole = () =>{
         {
             name: 'title',
             type: 'input',
-            message: 'Please enter the new role title:',
+            message: "Okay, let's add a new role! \nPlease enter the new role title:",
         },
         {
             name: 'salary',
@@ -116,7 +116,7 @@ const addEmployee = () => {
         {
             name: 'firstname',
             type: 'input',
-            message: "What is the employee's first name?",
+            message: "Okay, let's add a new employee! \nWhat is the employee's first name?",
         },
         {
             name: 'lastname',
@@ -145,9 +145,9 @@ const addEmployee = () => {
             },
             (err) => {
                 if (err) throw err;
-                console.log('--------------------------------------------------------------');
-                console.log('Congratualtions! You have successfully created a new employee.');
-                console.log('--------------------------------------------------------------');
+                console.log('---------------------------------------------------------------------------------------------------------');
+                console.log(`Congratualtions! You have successfully created a new employee, ${answer.firstname} ${answer.lastname}.`);
+                console.log('---------------------------------------------------------------------------------------------------------');
                 start();
             }
         );
@@ -159,7 +159,6 @@ const viewDepartments = () => {
     console.log('Pulling up department info...\n');
     connection.query('SELECT * FROM departments', (err, res) => {
       if (err) throw err;
-      
       const table = cTable.getTable(res);
       console.log(table);
       start();
@@ -170,7 +169,8 @@ const viewRoles = () => {
     console.log('Pulling up roles...\n');
     connection.query('SELECT * FROM roles', (err, res) => {
         if (err) throw err;
-        console.log(res);
+        const table = cTable.getTable(res);
+        console.log(table);
         start();
     });
 };
@@ -179,8 +179,105 @@ const viewEmployees = () => {
     console.log('Pulling up employees...\n');
     connection.query('SELECT * FROM employees', (err, res) => {
         if (err) throw err;
-        console.log(res);
+        const table = cTable.getTable(res);
+        console.log(table);
         start();
     });
 };
 
+// const upRole = () => {
+//     inquirer
+//     .prompt([
+//         {
+//             name: "uglyRole",
+//             type: "list",
+//             message: "Which role would you like to update?",
+//             choices: [ 'Salesperson', 'Accountant', 'Lawyer', 'Sales Lead', 'Engineer', 'Intern']
+//         },
+//         {
+//             name: "newRole",
+//             type: "input",
+//             message: "What would you like to call the new role?",
+//         }
+//     ])
+//     .then((answer) => {
+//     })
+
+
+
+// }
+
+// const betterRole = () => {
+//     const query = connection.query(
+//         'UPDATE roles SET ? WHERE ?',
+//         [
+//             {
+//                 title: answer.newRole,
+//             },
+//             {
+//                 title: answer.uglyRole,
+//             }
+//         ],
+//         (err, res) => {
+//             if (err) throw err;
+//             console.log(`${res.affectedRows} roles updated!\n`);
+//         }
+//     );
+// };
+
+
+const updateRole = () => {
+    connection.query("SELECT * FROM roles", (err, results) => {
+        if (err) throw err;
+        inquirer
+        .prompt([
+            {
+                name: "uglyRole",
+                type: "list",
+                choices() {
+                    const choiceArray = [];
+                    results.forEach(({ role_title }) => {
+                        choiceArray.push(role_title);
+                    });
+                    return choiceArray
+                },
+                message: "Which role would you like to update?",
+            },
+            {
+                name: "newRole",
+                type: "input",
+                message: "What would you like to call the new role?",
+            },
+        ])
+        .then((answer) => {
+            let chosenRole;
+            results.forEach((role) => {
+                if (role.role_title === answer.uglyRole) {
+                    chosenRole = role;
+                }
+            });
+
+            if(chosenRole) {
+                connection.query(
+                    'UPDATE roles SET ? WHERE ?',
+                    [
+                        {
+                            title: answer.newRole,
+                        },
+                        {
+                            title: answer.uglyRole,
+                        },
+                    ],
+                    (error) => {
+                        if (error) throw err;
+                        console.log('Role successfully updated!');
+                        start();
+                    }
+                );
+            } else {
+                console.log('Oops! Something went wrong.');
+                start();
+            }
+        });
+    });
+};
