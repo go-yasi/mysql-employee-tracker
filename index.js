@@ -24,7 +24,7 @@ const start = () => {
         name: 'listoption',
         type: 'list',
         message: 'Hello! What would you like to do?',
-        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View All Departments', 'View All Roles', 'View All Employees', 'Update Employee Role', 'Exit' ]
+        choices: [ 'Add Department', 'Add Role', 'Add Employee', 'View All Departments', 'View All Roles', 'View All Employees', 'Exit' ]
     }) 
     .then((answer) => {
         switch (answer.listoption){
@@ -40,8 +40,8 @@ const start = () => {
                 return viewRoles();
             case 'View All Employees':
                 return viewEmployees();
-            case 'Update Employee Role':
-                return updateRole();
+            // case 'Update Employee Role':
+            //     return updateRole();
             case 'Exit':
                 connection.end();
         }
