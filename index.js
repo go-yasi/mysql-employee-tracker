@@ -185,46 +185,6 @@ const viewEmployees = () => {
     });
 };
 
-// const upRole = () => {
-//     inquirer
-//     .prompt([
-//         {
-//             name: "uglyRole",
-//             type: "list",
-//             message: "Which role would you like to update?",
-//             choices: [ 'Salesperson', 'Accountant', 'Lawyer', 'Sales Lead', 'Engineer', 'Intern']
-//         },
-//         {
-//             name: "newRole",
-//             type: "input",
-//             message: "What would you like to call the new role?",
-//         }
-//     ])
-//     .then((answer) => {
-//     })
-
-
-
-// }
-
-// const betterRole = () => {
-//     const query = connection.query(
-//         'UPDATE roles SET ? WHERE ?',
-//         [
-//             {
-//                 title: answer.newRole,
-//             },
-//             {
-//                 title: answer.uglyRole,
-//             }
-//         ],
-//         (err, res) => {
-//             if (err) throw err;
-//             console.log(`${res.affectedRows} roles updated!\n`);
-//         }
-//     );
-// };
-
 
 const updateRole = () => {
     connection.query("SELECT * FROM roles", (err, results) => {
