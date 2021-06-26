@@ -1,6 +1,7 @@
 // require dependencies
 const inquirer = require('inquirer');
 const mysql = require('mysql');
+const cTable = require('console.table');
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -9,6 +10,13 @@ const connection = mysql.createConnection({
     password:'password',
     database:'employee_DB', 
 }); 
+
+
+
+connection.connect((err) => {
+    if (err) throw err;
+    start();
+});
 
 const start = () => {
     inquirer
@@ -53,7 +61,9 @@ const addDepartment = () => {
         },
         (err) => {
             if (err) throw err;
-            console.log('Your department was created successfully!');
+            console.log('----------------------------------------------------------------');
+            console.log('Congratualtions! You have successfully created a new department.');
+            console.log('----------------------------------------------------------------');
             start(); 
         }
         );
@@ -89,7 +99,9 @@ const addRole = () =>{
             },
             (err) => {
                 if (err) throw err;
+                console.log('----------------------------------------------------------');
                 console.log('Congratualtions! You have successfully created a new role.');
+                console.log('----------------------------------------------------------');
                 start();
             }
             );
@@ -132,7 +144,9 @@ const addEmployee = () => {
             },
             (err) => {
                 if (err) throw err;
+                console.log('--------------------------------------------------------------');
                 console.log('Congratualtions! You have successfully created a new employee.');
+                console.log('--------------------------------------------------------------');
                 start();
             }
         );
@@ -167,8 +181,3 @@ const viewEmployees = () => {
     });
 };
 
-start();
-
-connection.connect((err) => {
-    if (err) throw err;
-  });
